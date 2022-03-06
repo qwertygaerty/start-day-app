@@ -1,31 +1,32 @@
-let Nasa = {
-    name: 'nasa',
-    data: function () {
-        return {
-            nasaContent: {
-                title: null,
-                url: null,
-                explanation: null,
-            },
-        }
-    },
+const Nasa = {
+  name: 'nasa',
+  data() {
+    return {
+      nasaContent: {
+        title: null,
+        url: null,
+        explanation: null,
+      },
+    };
+  },
 
-    async mounted(){
-        let nasa = `https://api.nasa.gov/planetary/apod?api_key=ZrdWFCny3gCPoPy3rxao7DjaXJGzYMxaHbMuB1cF`;
+  async mounted() {
+    const nasa = 'https://api.nasa.gov/planetary/apod?api_key=ZrdWFCny3gCPoPy3rxao7DjaXJGzYMxaHbMuB1cF';
 
-        await axios
-            .get(nasa)
-            .then(response => {
-                this.nasaContent.title = response.data.title;
-                this.nasaContent.url = response.data.url;
-                this.nasaContent.explanation = response.data.explanation;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    },
+    // eslint-disable-next-line no-undef
+    await axios
+      .get(nasa)
+      .then((response) => {
+        this.nasaContent.title = response.data.title;
+        this.nasaContent.url = response.data.url;
+        this.nasaContent.explanation = response.data.explanation;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
 
-    template: `
+  template: `
      <div class="nasa">
         <h2 class="nasa__heading">Информация полученная Nasa</h2>
         <div class="nasa__container">
@@ -43,10 +44,6 @@ let Nasa = {
     </div>
     
     `,
-
 };
 
 export default Nasa;
-
-
-
