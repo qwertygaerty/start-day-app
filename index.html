@@ -1,135 +1,142 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Start of the day app</title>
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
     <!-- Подключаем скрипты-->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/libs/vue.js" type="module"></script>
-<script src="js/main.js" type="module" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/libs/vue.js" type="module"></script>
+    <script src="js/main.js" type="module" defer></script>
 
+    <main class="main-container" id="app">
+      <!-- Здесь будет Определение города-->
 
-<main class="main-container" id="app">
+      <!-- Здесь будет Preloader -->
 
-    <!-- Здесь будет Определение города-->
-
-    <!-- Здесь будет Preloader -->
-
-    <div class="location-and-date">
-        <h1 class="location-and-date__location">{{city}}
-            <a class="location-and-date__choose"><img src="icons/location.png" alt="location" class="location-and-date__icon"></a></h1>
+      <div class="location-and-date">
+        <h1 class="location-and-date__location">
+          {{city}}
+          <a class="location-and-date__choose"
+            ><img
+              src="icons/location.png"
+              alt="location"
+              class="location-and-date__icon"
+          /></a>
+        </h1>
         <div>{{state}} {{today}}</div>
-    </div>
+      </div>
 
-    <!-- Погода прямо сейчас -->
+      <!-- Погода прямо сейчас -->
 
-    <div class="current-temperature">
+      <div class="current-temperature">
         <div class="current-temperature__icon-container">
-            <img :src="main.image" class="current-temperature__icon" alt="">
+          <img :src="main.image" class="current-temperature__icon" alt="" />
         </div>
 
         <div class="current-temperature__content-container" v-if="main.weather">
-            <div class="current-temperature__value">{{Math.round(main.temp - 273.15)}}&deg;</div>
-            <div class="current-temperature__summary">{{main.weather[0].description}}</div>
+          <div class="current-temperature__value">
+            {{Math.round(main.temp - 273.15)}}&deg;
+          </div>
+          <div class="current-temperature__summary">
+            {{main.weather[0].description}}
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="current-stats">
+      <div class="current-stats">
         <div>
-            <div class="current-stats__value">{{Math.round(temp_max - 273.15)}}&deg;</div>
-            <div class="current-stats__label">Макс</div>
-            <div class="current-stats__value">{{Math.floor(temp_min - 273.15)}}&deg;</div>
-            <div class="current-stats__label">Мин</div>
+          <div class="current-stats__value">
+            {{Math.round(temp_max - 273.15)}}&deg;
+          </div>
+          <div class="current-stats__label">Макс</div>
+          <div class="current-stats__value">
+            {{Math.floor(temp_min - 273.15)}}&deg;
+          </div>
+          <div class="current-stats__label">Мин</div>
         </div>
         <div>
-            <div class="current-stats__value">{{main.wind_speed}} м/с</div>
-            <div class="current-stats__label">Ветер</div>
-            <div class="current-stats__value">{{main.humidity}}%</div>
-            <div class="current-stats__label">Влажность</div>
+          <div class="current-stats__value">{{main.wind_speed}} м/с</div>
+          <div class="current-stats__label">Ветер</div>
+          <div class="current-stats__value">{{main.humidity}}%</div>
+          <div class="current-stats__label">Влажность</div>
         </div>
         <div>
-            <div class="current-stats__value">{{main.sunrise}}</div>
-            <div class="current-stats__label">Восход</div>
-            <div class="current-stats__value">{{main.sunset}}</div>
-            <div class="current-stats__label">Закат</div>
+          <div class="current-stats__value">{{main.sunrise}}</div>
+          <div class="current-stats__label">Восход</div>
+          <div class="current-stats__value">{{main.sunset}}</div>
+          <div class="current-stats__label">Закат</div>
         </div>
-    </div>
+      </div>
 
-    <!-- Погода на сегодня -->
+      <!-- Погода на сегодня -->
 
-    <div class="weather-by-hour">
+      <div class="weather-by-hour">
         <h2 class="weather-by-hour__heading">Погода на следующие 12 часов</h2>
-        <div class="weather-by-hour__container" >
-
-            <div class="weather-by-hour__item" v-if="hourly[0]" v-for="i of hourly" >
-
-                <div class="weather-by-hour__hour">{{getDateUnix(i.dt)}}</div>
-                <img :src="i.image" alt="Mostly sunny">
-                <div>{{Math.round(i.temp - 273.15)}}&deg;</div>
-
-            </div>
-
-
+        <div class="weather-by-hour__container">
+          <div
+            class="weather-by-hour__item"
+            v-if="hourly[0]"
+            v-for="i of hourly"
+          >
+            <div class="weather-by-hour__hour">{{getDateUnix(i.dt)}}</div>
+            <img :src="i.image" alt="Mostly sunny" />
+            <div>{{Math.round(i.temp - 273.15)}}&deg;</div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Погода на следующую неделю-->
+      <!-- Погода на следующую неделю-->
 
-    <div class="week">
+      <div class="week">
         <h2 class="week__heading">Погода на следующую неделю</h2>
-        <div class="week__container" >
-
-
-            <div class="week__row" v-for="el of daily" >
-
-                <div class="week__date">
-                    {{getWeekDay(new Date(el.dt * 1000))}}
-                    <div class="week__label">{{(new Date(el.dt * 1000)).toLocaleString('ru', {
-                        day: '2-digit',
-                        month: '2-digit',
-                    })}}
-                    </div>
-                </div>
-
-                <div class="week__low">
-                    {{Math.round(el.temp.min - 273.15)}}&deg;
-                    <div class="week__label">Мин</div>
-                </div>
-
-                <div class="week__high">
-                    {{Math.floor(el.temp.max - 273.15)}}&deg;
-                    <div class="week__label">Макс</div>
-                </div>
-
-                <div class="week__icon">
-                    <img :src=`http://openweathermap.org/img/wn/${el.weather[0].icon}@2x.png` alt="Sunny">
-                </div>
-
-                <div class="week__rain">
-                    {{el.humidity}}%
-                    <div class="week__label">Влажность</div>
-                </div>
-
-                <div class="week__wind">
-                    {{Math.round(el.wind_speed)}} м/с
-                    <div class="week__label">Ветер</div>
-                </div>
-
+        <div class="week__container">
+          <div class="week__row" v-for="el of daily">
+            <div class="week__date">
+              {{getWeekDay(new Date(el.dt * 1000))}}
+              <div class="week__label">
+                {{(new Date(el.dt * 1000)).toLocaleString('ru', { day:
+                '2-digit', month: '2-digit', })}}
+              </div>
             </div>
 
+            <div class="week__low">
+              {{Math.round(el.temp.min - 273.15)}}&deg;
+              <div class="week__label">Мин</div>
+            </div>
+
+            <div class="week__high">
+              {{Math.floor(el.temp.max - 273.15)}}&deg;
+              <div class="week__label">Макс</div>
+            </div>
+
+            <div class="week__icon">
+              <img
+              :src=`http://openweathermap.org/img/wn/${el.weather[0].icon}@2x.png`
+              alt="Sunny">
+            </div>
+
+            <div class="week__rain">
+              {{el.humidity}}%
+              <div class="week__label">Влажность</div>
+            </div>
+
+            <div class="week__wind">
+              {{Math.round(el.wind_speed)}} м/с
+              <div class="week__label">Ветер</div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Информация, полученная из Nasa APOD API -->
-
-</main>
-
-</body>
+      <!-- Информация, полученная из Nasa APOD API -->
+    </main>
+  </body>
 </html>
