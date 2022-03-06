@@ -1,5 +1,5 @@
 const Nasa = {
-  name: 'nasa',
+  name: "nasa",
   data() {
     return {
       nasaContent: {
@@ -11,7 +11,8 @@ const Nasa = {
   },
 
   async mounted() {
-    const nasa = 'https://api.nasa.gov/planetary/apod?api_key=ZrdWFCny3gCPoPy3rxao7DjaXJGzYMxaHbMuB1cF';
+    const nasa =
+      "https://api.nasa.gov/planetary/apod?api_key=ZrdWFCny3gCPoPy3rxao7DjaXJGzYMxaHbMuB1cF";
 
     // eslint-disable-next-line no-undef
     await axios

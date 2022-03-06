@@ -117,12 +117,12 @@ new Vue({
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
       } else if (this.refCount > 0) {
         this.refCount -= 1;
-        this.isLoading = (this.refCount > 0);
+        this.isLoading = this.refCount > 0;
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
       }
     },
     getTheme() {
-      this.main.dt = (new Date(this.main.dt * 1000)).toLocaleString('ru', {
+      this.main.dt = new Date(this.main.dt * 1000).toLocaleString('ru', {
         hour: '2-digit',
       });
       if (this.main.dt > 16 || (this.main.dt < 6 && this.main.dt > 16)) {
@@ -156,22 +156,28 @@ new Vue({
   },
   created() {
     // eslint-disable-next-line no-undef
-    axios.interceptors.request.use((config) => {
-      this.setLoading(true);
-      return config;
-    }, (error) => {
-      this.setLoading(false);
-      return Promise.reject(error);
-    });
+    axios.interceptors.request.use(
+      (config) => {
+        this.setLoading(true);
+        return config;
+      },
+      (error) => {
+        this.setLoading(false);
+        return Promise.reject(error);
+      },
+    );
 
     // eslint-disable-next-line no-undef
-    axios.interceptors.response.use((response) => {
-      this.setLoading(false);
-      return response;
-    }, (error) => {
-      this.setLoading(false);
-      return Promise.reject(error);
-    });
+    axios.interceptors.response.use(
+      (response) => {
+        this.setLoading(false);
+        return response;
+      },
+      (error) => {
+        this.setLoading(false);
+        return Promise.reject(error);
+      },
+    );
   },
 
   components: {
